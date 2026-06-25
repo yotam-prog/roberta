@@ -7,16 +7,15 @@ pipeline {
                 echo 'Checking out source code...'
             }
         }
-      stage('Push to Docker Hub') {
-    steps {
-        script {
-            // Leave the URL empty or use 'https://index.docker.io/v1/' for Docker Hub
-            docker.withRegistry('', 'dockerhub-credentials-id') {
-                def myImage = docker.build("username/my-app:latest")
-                myImage.push()
-            }
-        }
-    }
+stage('Build') {
+   steps {
+       sh '''
+            docker login yotam2012@gmail.com
+            docker build 1.0
+            docker tag test
+            docker push test push
+       '''
+   }
 }
         stage('Test') {
             steps {
