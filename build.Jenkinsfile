@@ -7,12 +7,17 @@ pipeline {
                 echo 'Checking out source code...'
             }
         }
-        stage('Build') {
-            steps {
-                echo 'Building your RoBERTa model/application...'
-                // Add your build commands here, e.g., sh 'python setup.py build'
+      stage('Push to Docker Hub') {
+    steps {
+        script {
+            // Leave the URL empty or use 'https://index.docker.io/v1/' for Docker Hub
+            docker.withRegistry('', 'dockerhub-credentials-id') {
+                def myImage = docker.build("username/my-app:latest")
+                myImage.push()
             }
         }
+    }
+}
         stage('Test') {
             steps {
                 echo 'Running unit tests...'
