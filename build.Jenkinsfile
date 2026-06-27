@@ -17,7 +17,7 @@ pipeline {
                     docker.withRegistry('https://index.docker.io/v1/', 'docker-hub-credentials') {
                         
                         // 1. Build the image
-                        def customImage = docker.build("yota45/my-image-name:${env.BUILD_NUMBER}")
+                        def customImage = docker.build("yota45/roberta:${env.BUILD_NUMBER}")
                         
                         // 2. Push the image
                         customImage.push()
